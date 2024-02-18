@@ -1,0 +1,31 @@
+- name: Install stow
+  ansible.builtin.apt:
+    name:
+      - stow
+
+- name: Clone dotfiles repository with specific tag
+  ansible.builtin.git:
+    repo: "https://github.com/rhattox/dotfiles.git"
+    dest: "/home/{{ ansible_env.SUDO_USER }}/dotfiles"
+    refspec: "main"  
+    force: true
+
+- name: Setup Permissions
+  ansible.builtin.file:
+    path:  "/home/{{ ansible_env.SUDO_USER }}/dotfiles"
+    state: directory
+    recurse: yes
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0755"
+
+- name: Configure Stow
+  become: false
+  register: configure_stow
+  changed_when: configure_stow.rc != 0
+  ansible.builtin.shell: |
+    cd ~/dotfiles && stow --adopt .
+  args:
+    executable: /bin/bash
+
+

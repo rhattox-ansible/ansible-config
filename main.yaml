@@ -1,0 +1,7 @@
+- name: Dev Installation
+  hosts: localhost
+  become: true
+  gather_facts: true
+
+  roles:
+    - dotfiles

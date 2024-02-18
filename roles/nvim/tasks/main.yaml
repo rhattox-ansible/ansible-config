@@ -1,0 +1,141 @@
+- name: Download NVIM tar file
+  ansible.builtin.get_url:
+    url: "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
+    dest: "/tmp/nvim.tar.gz"
+    mode: "0755"
+
+- name: Create tmp NVIM directory
+  ansible.builtin.file:
+    path: "/tmp/nvim"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: Extract NVIM archive to temporary path
+  ansible.builtin.unarchive:
+    src: "/tmp/nvim.tar.gz"
+    dest: "/tmp/nvim/"
+    remote_src: true
+
+- name: Create NVIM directory
+  ansible.builtin.file:
+    path: "/opt/nvim"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: Install Nvim To Correct Folder
+  ansible.builtin.copy:
+    src: "/tmp/nvim/nvim-linux64/"
+    dest: "/opt/nvim/"
+    remote_src: true
+    mode: "0755"
+    group: root
+    owner: root
+
+- name: Clean Up NVIM
+  ansible.builtin.file:
+    state: absent
+    path: /tmp/nvim/
+
+- name: Clean Up NVIM
+  ansible.builtin.file:
+    state: absent
+    path: /tmp/nvim.tar.gz
+
+- name: Creates Symlink
+  ansible.builtin.file:
+    src: "/opt/nvim/bin/nvim"
+    dest: "/usr/bin/nvim"
+    mode: "0777"
+    owner: root
+    group: root
+    state: link
+
+- name: Clone NVIM repository with specific tag
+  ansible.builtin.git:
+    repo: "https://github.com/rhattox/nvim-configs.git"
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.config/nvim"
+    refspec: "main"  
+    force: true
+
+- name: Setup Permissions
+  ansible.builtin.file:
+    path:  "/home/{{ ansible_env.SUDO_USER }}/.config/nvim"
+    state: directory
+    recurse: yes
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0755"
+
+- name: Install Tmux and ZSH
+  ansible.builtin.apt:
+    name:
+      - tmux
+
+- name: Download NVIM tar file
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/rhattox/tmux-configs/main/.tmux.conf"
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.tmux.conf"
+    mode: "0755"
+
+- name: Setup Permissions
+  ansible.builtin.file:
+    path:  "/home/{{ ansible_env.SUDO_USER }}/.tmux.conf"
+    state: file
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0755"
+
+- name: Clone TPM Repository  
+  ansible.builtin.git:
+    repo: "https://github.com/tmux-plugins/tpm.git"
+    refspec: "master"  
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.tmux/plugins/tpm"
+    force: true
+
+- name: Setup Permissions
+  ansible.builtin.file:
+    path:  "/home/{{ ansible_env.SUDO_USER }}/.tmux/plugins/tpm"
+    state: directory
+    recurse: yes
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0755"
+
+- name: Download HomeBrew
+  ansible.builtin.git:
+    repo: "https://github.com/Homebrew/install.git"
+    dest: "/tmp/homebrew"
+    refspec: "master"  
+    force: true
+
+- name: Install HomeBrew
+  become: false
+  register: install_homebrew
+  changed_when: install_homebrew.rc != 0
+  ansible.builtin.shell: |
+   NONINTERACTIVE=1 /tmp/homebrew/install.sh
+  args:
+    executable: /bin/bash
+
+- name: Install HomeBrew
+  become: false
+  register: install_homebrew
+  changed_when: install_homebrew.rc != 0
+  ansible.builtin.shell: |
+    echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+  args:
+    executable: /bin/bash
+
+- name: Install YQ and Ripgrep
+  become: false
+  register: install_homebrew
+  changed_when: install_homebrew.rc != 0
+  ansible.builtin.shell: |
+   brew install yq ripgrep
+  args:
+    executable: /bin/bash
+
