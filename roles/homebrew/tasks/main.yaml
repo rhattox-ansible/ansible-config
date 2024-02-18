@@ -1,0 +1,25 @@
+- name: Download HomeBrew
+  ansible.builtin.git:
+    repo: "https://github.com/Homebrew/install.git"
+    dest: "/tmp/homebrew"
+    refspec: "master"  
+    force: true
+
+- name: Install HomeBrew
+  become: false
+  register: install_homebrew
+  changed_when: install_homebrew.rc != 0
+  ansible.builtin.shell: |
+   NONINTERACTIVE=1 /tmp/homebrew/install.sh
+  args:
+    executable: /bin/bash
+
+- name: Install YQ and Ripgrep
+  become: false
+  register: install_homebrew
+  changed_when: install_homebrew.rc != 0
+  ansible.builtin.shell: |
+   brew install yq ripgrep starship
+  args:
+    executable: /bin/bash
+
