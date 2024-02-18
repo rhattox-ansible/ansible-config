@@ -6,3 +6,5 @@
   roles:
     - dotfiles
     - nvim
+    - tmux
+    - homebrew
