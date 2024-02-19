@@ -24,7 +24,7 @@
   register: configure_stow
   changed_when: configure_stow.rc != 0
   ansible.builtin.shell: |
-    cd ~/dotfiles && stow --adopt .
+    cd ~/dotfiles && stow -D . && stow .
   args:
     executable: /bin/bash
 
