@@ -21,10 +21,21 @@
 
 - name: Configure Stow
   become: false
+  ansible.builtin.shell: |
+    rm -f ~/.bashrc
+    rm -rf ~/.config/nvim
+    rm -f ~/.tmux.conf
+
+  args:
+    executable: /bin/bash
+
+
+- name: Configure Stow
+  become: false
   register: configure_stow
   changed_when: configure_stow.rc != 0
   ansible.builtin.shell: |
-    cd ~/dotfiles && stow -D . && stow .
+    cd ~/dotfiles && stow .
   args:
     executable: /bin/bash
 

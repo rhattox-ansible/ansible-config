@@ -1,3 +1,8 @@
+- name: Download prerequisites
+  ansible.builtin.apt:
+    name:
+      - curl
+
 - name: Download HomeBrew
   ansible.builtin.git:
     repo: "https://github.com/Homebrew/install.git"

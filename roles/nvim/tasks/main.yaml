@@ -1,3 +1,9 @@
+- name: Install prerequistes
+  ansible.builtin.apt:
+    name:
+      - build-essential
+      - fonts-firacode
+
 - name: Download NVIM tar file
   ansible.builtin.get_url:
     url: "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
