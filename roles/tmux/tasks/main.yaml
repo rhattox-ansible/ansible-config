@@ -3,3 +3,11 @@
     name:
       - tmux
 
+- name: Clone TPM repository
+  ansible.builtin.git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.tmux/plugins/tpm"
+    refspec: "master"  
+    force: true
+
+
