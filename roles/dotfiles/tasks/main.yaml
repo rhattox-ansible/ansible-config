@@ -25,7 +25,7 @@
     rm -f ~/.bashrc
     rm -rf ~/.config/nvim
     rm -f ~/.tmux.conf
-
+    rm -f ~/.gitconfig
   args:
     executable: /bin/bash
 
