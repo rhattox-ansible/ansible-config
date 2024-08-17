@@ -18,13 +18,3 @@
    NONINTERACTIVE=1 /tmp/homebrew/install.sh
   args:
     executable: /bin/bash
-
-- name: Install YQ and Ripgrep
-  become: false
-  register: install_homebrew
-  changed_when: install_homebrew.rc != 0
-  ansible.builtin.shell: |
-   source ~/.bashrc && brew install yq ripgrep starship
-  args:
-    executable: /bin/bash
-

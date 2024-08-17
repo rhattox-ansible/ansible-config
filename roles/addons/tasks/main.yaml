@@ -1,0 +1,9 @@
+- name: Install YQ and Ripgrep
+  become: false
+  register: install_homebrew
+  changed_when: install_homebrew.rc != 0
+  ansible.builtin.shell: |
+   brew install yq ripgrep starship
+  args:
+    executable: /bin/bash
+
