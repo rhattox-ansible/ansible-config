@@ -4,9 +4,4 @@
   gather_facts: true
 
   roles:
-     - asdf
-     - dotfiles
-     - nvim
-     - tmux
-     - homebrew
-     - addons
+    - asdf-plugins

@@ -1,4 +1,5 @@
-- name: Clone dotfiles repository with specific tag
+- name: Clone ASDF repository with specific tag
+  become: false
   ansible.builtin.git:
     repo: "https://github.com/asdf-vm/asdf.git"
     dest: "/home/{{ ansible_env.SUDO_USER }}/.asdf"

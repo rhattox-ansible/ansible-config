@@ -19,13 +19,15 @@
     group: "{{ ansible_env.SUDO_USER }}"
     mode: "0755"
 
-- name: Configure Stow
+- name: Delete Files
   become: false
   ansible.builtin.shell: |
-    rm -f ~/.bashrc
-    rm -rf ~/.config/nvim
-    rm -f ~/.tmux.conf
-    rm -f ~/.gitconfig
+    rm -f /home/{{ ansible_env.SUDO_USER }}/bashrc
+    rm -rf /home/{{ ansible_env.SUDO_USER }}/.config/nvim
+    rm -rf /home/{{ ansible_env.SUDO_USER }}/.local/state/nvim
+    rm -rf /home/{{ ansible_env.SUDO_USER }}/.local/share/nvim
+    rm -f /home/{{ ansible_env.SUDO_USER }}/tmux.conf
+    rm -f /home/{{ ansible_env.SUDO_USER }}/gitconfig
   args:
     executable: /bin/bash
 
