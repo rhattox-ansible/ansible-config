@@ -1,3 +1,28 @@
+- name: Install tmux
+  ansible.builtin.apt:
+    name:
+      - build-essential
+      - unzip
+      - libreadline-dev
+      - openssl 
+      - build-essential 
+      - curl 
+      - gcc 
+      - libbz2-dev 
+      - libev-dev 
+      - libffi-dev 
+      - libgdbm-dev 
+      - liblzma-dev 
+      - libncurses-dev 
+      - libreadline-dev 
+      - libsqlite3-dev 
+      - libssl-dev 
+      - make 
+      - tk-dev 
+      - wget 
+      - git 
+      - zlib1g-dev
+
 - name: Install ASDF Plugins
   become: false
   ansible.builtin.shell: |
@@ -36,8 +61,8 @@
 - name: Install Python
   become: false
   ansible.builtin.shell: |
-    asdf install python 3.12.6
-    asdf global python 3.12.6
+    asdf install python 3.10.0
+    asdf global python 3.10.0
   args:
     executable: /bin/bash 
 
