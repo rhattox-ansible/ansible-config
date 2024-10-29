@@ -1,6 +1,7 @@
 - name: Install tmux
   ansible.builtin.apt:
     name:
+      - xclip
       - build-essential
       - unzip
       - libreadline-dev
@@ -31,6 +32,7 @@
     asdf plugin add maven https://github.com/halcyon/asdf-maven.git
     asdf plugin add python https://github.com/danhper/asdf-python.git
     asdf plugin add node https://github.com/asdf-vm/asdf-nodejs.git
+    asdf plugin add spring-boot https://github.com/joschi/asdf-spring-boot.git
   args:
     executable: /bin/bash
 
@@ -65,6 +67,14 @@
     asdf global python 3.10.0
   args:
     executable: /bin/bash 
+
+- name: Install Spring Boot
+  become: false
+  ansible.builtin.shell: |
+    asdf install spring-boot 3.3.5
+    asdf global spring-boot 3.3.5
+  args:
+    executable: /bin/bash
 
 - name: Install Node
   become: false
