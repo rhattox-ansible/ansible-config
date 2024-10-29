@@ -11,3 +11,11 @@
     force: true
 
 
+- name: Setup Permissions
+  ansible.builtin.file:
+    path:  "/home/{{ ansible_env.SUDO_USER }}/.tmux"
+    state: directory
+    recurse: yes
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0755"
