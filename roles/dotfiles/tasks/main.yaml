@@ -22,7 +22,7 @@
 - name: Delete Files
   become: false
   ansible.builtin.shell: |
-    rm -f /home/{{ ansible_env.SUDO_USER }}/bashrc
+    rm -f /home/{{ ansible_env.SUDO_USER }}/.bashrc
     rm -rf /home/{{ ansible_env.SUDO_USER }}/.config/nvim
     rm -rf /home/{{ ansible_env.SUDO_USER }}/.local/state/nvim
     rm -rf /home/{{ ansible_env.SUDO_USER }}/.local/share/nvim
