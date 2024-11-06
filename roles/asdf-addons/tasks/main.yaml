@@ -1,4 +1,4 @@
-- name: Install tmux
+- name: Install Basic Packages
   ansible.builtin.apt:
     name:
       - xclip
@@ -23,6 +23,14 @@
       - wget 
       - git 
       - zlib1g-dev
+
+- name: Clone ASDF repository with specific tag
+  become: false
+  ansible.builtin.git:
+    repo: "https://github.com/asdf-vm/asdf.git"
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.asdf"
+    refspec: "v0.14.0"  
+    force: true
 
 - name: Install ASDF Plugins
   become: false

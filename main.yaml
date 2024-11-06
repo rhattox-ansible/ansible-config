@@ -2,11 +2,11 @@
   hosts: localhost
   become: true
   gather_facts: true
-
   roles:
-     - asdf
-     - dotfiles
-     - nvim
      - tmux
+     - nvim
+     - dotfiles
+     - asdf
+     - asdf-addons
      - homebrew
-     - addons
+     - homebrew-addons

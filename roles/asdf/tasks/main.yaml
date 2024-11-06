@@ -1,7 +1,8 @@
-- name: Clone ASDF repository with specific tag
+- name: Installing ASDF via github clone
   become: false
   ansible.builtin.git:
     repo: "https://github.com/asdf-vm/asdf.git"
     dest: "/home/{{ ansible_env.SUDO_USER }}/.asdf"
     refspec: "v0.14.0"  
     force: true
+
