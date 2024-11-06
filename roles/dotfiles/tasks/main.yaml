@@ -27,7 +27,7 @@
     rm -rf /home/{{ ansible_env.SUDO_USER }}/.local/state/nvim
     rm -rf /home/{{ ansible_env.SUDO_USER }}/.local/share/nvim
     rm -f /home/{{ ansible_env.SUDO_USER }}/tmux.conf
-    rm -f /home/{{ ansible_env.SUDO_USER }}/gitconfig
+    rm -f /home/{{ ansible_env.SUDO_USER }}/.gitconfig
   args:
     executable: /bin/bash
 
