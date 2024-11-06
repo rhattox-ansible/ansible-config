@@ -2,8 +2,9 @@
   become: false
   register: install_homebrew
   changed_when: install_homebrew.rc != 0
-  ansible.builtin.shell: install yq ripgrep starship
+  ansible.builtin.shell: |
+    /home/linuxbrew/.linuxbrew/bin/brew install yq ripgrep starship
   args:
-    executable: /home/linuxbrew/.linuxbrew/bin/brew
+    executable: /bin/bash
 
 
