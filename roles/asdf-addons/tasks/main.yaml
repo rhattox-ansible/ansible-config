@@ -1,6 +1,7 @@
 - name: Install Basic Packages
   ansible.builtin.apt:
     name:
+      - tree
       - xclip
       - build-essential
       - unzip
