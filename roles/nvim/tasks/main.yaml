@@ -2,61 +2,62 @@
   ansible.builtin.apt:
     name:
       - build-essential
-      - fonts-firacode 
 
 - name: Download NVIM tar file
   ansible.builtin.get_url:
-    url: "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
-    dest: "/tmp/nvim.tar.gz"
-    mode: "0755"
+    url: "{{ app_repository_url }}"
+    dest: "{{ app_tmp_file }}"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0750"
 
 - name: Create tmp NVIM directory
   ansible.builtin.file:
-    path: "/tmp/nvim"
     state: directory
-    owner: "root"
-    group: "root"
-    mode: "0755"
+    path: "{{ app_temp_path }}"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0750"
 
 - name: Extract NVIM archive to temporary path
   ansible.builtin.unarchive:
-    src: "/tmp/nvim.tar.gz"
-    dest: "/tmp/nvim/"
+    src: "{{ app_tmp_file }}"
+    dest: "{{ app_temp_path }}"
     remote_src: true
 
 - name: Create NVIM directory
   ansible.builtin.file:
-    path: "/opt/nvim"
     state: directory
-    owner: "root"
-    group: "root"
-    mode: "0755"
+    path: "{{ app_home_path }}"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0750"
 
 - name: Install Nvim To Correct Folder
   ansible.builtin.copy:
-    src: "/tmp/nvim/nvim-linux64/"
-    dest: "/opt/nvim/"
     remote_src: true
-    mode: "0755"
-    group: root
-    owner: root
-
-- name: Clean Up NVIM
-  ansible.builtin.file:
-    state: absent
-    path: /tmp/nvim/
-
-- name: Clean Up NVIM
-  ansible.builtin.file:
-    state: absent
-    path: /tmp/nvim.tar.gz
+    src: "{{ app_temp_path }}/nvim-linux64/"
+    dest: "{{ app_home_path }}/"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0750"
 
 - name: Creates Symlink
   ansible.builtin.file:
-    src: "/opt/nvim/bin/nvim"
-    dest: "/usr/bin/nvim"
-    mode: "0777"
-    owner: root
-    group: root
     state: link
+    src: "{{ binary_source_path }}"
+    dest: "{{ binary_dest_path }}"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0750"
 
+- name: Clean Up NVIM
+  block:
+    - name: Remove Temp Folder
+      ansible.builtin.file:
+        state: absent
+        path: "{{ app_temp_path }}"
+    - name: Remove Temp File
+      ansible.builtin.file:
+        state: absent
+        path: "{{ app_tmp_file }}"

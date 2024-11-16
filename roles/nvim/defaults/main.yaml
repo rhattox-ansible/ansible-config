@@ -1,0 +1,7 @@
+app_name: nvim
+app_repository_url: "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
+app_tmp_file: "/tmp/{{ app_name }}.tar.gz"
+app_temp_path: "/tmp/{{ app_name }}"
+app_home_path: "/var/lib/{{ app_name }}"
+binary_source_path: "{{ app_home_path }}/bin/{{ app_name }}"
+binary_dest_path: "/usr/bin/{{ app_name }}"

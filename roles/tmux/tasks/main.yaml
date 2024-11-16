@@ -3,19 +3,26 @@
     name:
       - tmux
 
+- name: Ensure permissions for a directory and all subfolders/files
+  ansible.builtin.file:
+    path: "{{ tmux_plugins_path }}"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    recurse: true
+    mode: "0750"
+
 - name: Clone TPM repository
   ansible.builtin.git:
-    repo: "https://github.com/tmux-plugins/tpm"
-    dest: "/home/{{ ansible_env.SUDO_USER }}/.tmux/plugins/tpm"
-    refspec: "master"  
+    repo: "{{ tmux_repository }}"
+    dest: "{{ tmux_plugins_path }}"
+    refspec: "{{ tmux_version }}"
     force: true
-
 
 - name: Setup Permissions
   ansible.builtin.file:
-    path:  "/home/{{ ansible_env.SUDO_USER }}/.tmux"
-    state: directory
-    recurse: yes
+    path: "{{ tmux_default_path }}"
     owner: "{{ ansible_env.SUDO_USER }}"
     group: "{{ ansible_env.SUDO_USER }}"
-    mode: "0755"
+    state: directory
+    recurse: true
+    mode: "0750"

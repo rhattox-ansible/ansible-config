@@ -1,0 +1,4 @@
+tmux_default_path: "/home/{{ ansible_env.SUDO_USER }}/.tmux"
+tmux_plugins_path: "{{ tmux_default_path }}/plugins/tpm"
+tmux_version: "master"
+tmux_repository: "https://github.com/tmux-plugins/tpm"
