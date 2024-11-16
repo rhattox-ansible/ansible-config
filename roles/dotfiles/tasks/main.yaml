@@ -5,40 +5,33 @@
 
 - name: Clone dotfiles repository with specific tag
   ansible.builtin.git:
-    repo: "https://github.com/rhattox/dotfiles.git"
-    dest: "/home/{{ ansible_env.SUDO_USER }}/dotfiles"
-    refspec: "main"  
+    repo: "{{ app_repository }}"
+    dest: "{{ app_home_path }}"
+    refspec: "{{ app_branch }}"
     force: true
 
 - name: Setup Permissions
   ansible.builtin.file:
-    path:  "/home/{{ ansible_env.SUDO_USER }}/dotfiles"
     state: directory
-    recurse: yes
+    recurse: true
+    path: "{{ app_home_path }}"
     owner: "{{ ansible_env.SUDO_USER }}"
     group: "{{ ansible_env.SUDO_USER }}"
-    mode: "0755"
+    mode: "0750"
 
 - name: Delete Files
+  changed_when: false
   become: false
   ansible.builtin.shell: |
-    rm -f /home/{{ ansible_env.SUDO_USER }}/.bashrc
-    rm -rf /home/{{ ansible_env.SUDO_USER }}/.config/nvim
-    rm -rf /home/{{ ansible_env.SUDO_USER }}/.local/state/nvim
-    rm -rf /home/{{ ansible_env.SUDO_USER }}/.local/share/nvim
-    rm -f /home/{{ ansible_env.SUDO_USER }}/.tmux.conf
-    rm -f /home/{{ ansible_env.SUDO_USER }}/.gitconfig
+    "{{ file_delete_setup }}"
   args:
     executable: /bin/bash
-
 
 - name: Configure Stow
   become: false
   register: configure_stow
-  changed_when: configure_stow.rc != 0
+  changed_when: false
   ansible.builtin.shell: |
-    cd ~/dotfiles && stow .
+    "cd {{ app_home_path }}  && stow -t {{ user_home_path }} bash"
   args:
     executable: /bin/bash
-
-

@@ -5,16 +5,32 @@
 
 - name: Download HomeBrew
   ansible.builtin.git:
-    repo: "https://github.com/Homebrew/install.git"
-    dest: "/tmp/homebrew"
-    refspec: "master"  
+    repo: "{{ app_repository_url }}"
+    dest: "{{ app_tmp_path }}"
+    refspec: "{{ app_branch }}"
     force: true
 
 - name: Install HomeBrew
   become: false
-  register: install_homebrew
-  changed_when: install_homebrew.rc != 0
+  changed_when: false
   ansible.builtin.shell: |
-   NONINTERACTIVE=1 /tmp/homebrew/install.sh
+    export NONINTERACTIVE=1 && export HOMEBREW_PREFIX={{ app_home }}  && {{ app_tmp_path }}/install.sh
+  args:
+    executable: /bin/bash
+
+- name: Create Profiler
+  ansible.builtin.copy:
+    dest: "{{ app_bash_completition_path }}"
+    content: |
+      {{ app_bash_completition_content }}
+    owner: root
+    group: root
+    mode: "0555"
+
+- name: Install YQ and Ripgrep
+  become: false
+  changed_when: false
+  ansible.builtin.shell: |
+    {{ app_binary }} install yq ripgrep starship
   args:
     executable: /bin/bash

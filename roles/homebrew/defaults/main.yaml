@@ -1,0 +1,11 @@
+app_name: "homebrew"
+app_home: "/home/linuxbrew"
+app_binary: "{{ app_home }}/.linuxbrew/bin/brew"
+app_repository_url: "https://github.com/Homebrew/install.git"
+app_tmp_path: "/tmp/homebrew"
+app_branch: "master"
+
+app_bash_completition_path: "/etc/profile.d/{{ app_name }}.sh"
+app_bash_completition_content: |
+  export HOMEBREW_PREFIX={{ app_home }}
+  export PATH=$HOMEBREW_PREFIX/bin:$PATH
