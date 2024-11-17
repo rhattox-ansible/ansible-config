@@ -3,9 +3,9 @@
   become: true
   gather_facts: true
   roles:
-    # - apt
-    # - tmux
-    # - nvim
-    # - dotfiles
-    # - asdf
+    - apt
+    - tmux
+    - nvim
+    - dotfiles
+    - asdf
     - homebrew

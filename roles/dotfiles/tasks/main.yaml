@@ -23,7 +23,7 @@
   changed_when: false
   become: false
   ansible.builtin.shell: |
-    "{{ file_delete_setup }}"
+    {{ file_delete_setup }}
   args:
     executable: /bin/bash
 
@@ -31,7 +31,6 @@
   become: false
   register: configure_stow
   changed_when: false
-  ansible.builtin.shell: |
-    "cd {{ app_home_path }}  && stow -t {{ user_home_path }} bash"
+  ansible.builtin.shell: "stow --dir={{ app_home_path }} --target={{ user_home_path }} ./"
   args:
     executable: /bin/bash

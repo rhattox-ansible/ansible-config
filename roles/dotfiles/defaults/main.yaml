@@ -2,7 +2,7 @@ app_name: dotfiles
 app_repository: "https://github.com/rhattox/{{ app_name }}.git"
 app_branch: "main"
 app_home_path: "/var/lib/{{ app_name }}"
-user_home_path: "/home/{{ ansible_env.SUDO_USER }}/"
+user_home_path: "/home/{{ ansible_env.SUDO_USER }}"
 
 file_delete_setup: |
   rm -f /home/{{ ansible_env.SUDO_USER }}/.bashrc
