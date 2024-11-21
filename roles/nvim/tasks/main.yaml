@@ -2,6 +2,7 @@
   ansible.builtin.apt:
     name:
       - build-essential
+      - fzf
 
 - name: Download NVIM tar file
   ansible.builtin.get_url:
