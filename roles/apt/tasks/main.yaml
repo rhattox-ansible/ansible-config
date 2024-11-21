@@ -4,10 +4,11 @@
       - tree
       - xclip
       - build-essential
+      - ansible-lint
+      - zip
       - unzip
       - libreadline-dev
       - openssl
-      - build-essential
       - curl
       - gcc
       - libbz2-dev

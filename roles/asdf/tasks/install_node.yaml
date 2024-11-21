@@ -1,0 +1,27 @@
+- name: Install Plugin
+  become: false
+  ansible.builtin.command:
+    argv:
+      - "{{ binary_source_path }}"
+      - plugin
+      - add
+      - nodejs
+      - https://github.com/asdf-vm/asdf-nodejs.git
+
+- name: Install Latest Version
+  become: false
+  ansible.builtin.command:
+    argv:
+      - "{{ binary_source_path }}"
+      - install
+      - nodejs
+      - 23.3.0
+
+- name: Define Global Version
+  become: false
+  ansible.builtin.command:
+    argv:
+      - "{{ binary_source_path }}"
+      - global
+      - nodejs
+      - 23.3.0
