@@ -15,7 +15,7 @@
       - "{{ binary_source_path }}"
       - install
       - nodejs
-      - 23.3.0
+      - v23.3.0
 
 - name: Define Global Version
   become: false
@@ -24,4 +24,4 @@
       - "{{ binary_source_path }}"
       - global
       - nodejs
-      - 23.3.0
+      - v23.3.0
