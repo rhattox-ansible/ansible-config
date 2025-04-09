@@ -6,4 +6,4 @@
     - tmux
     - homebrew
     - dotfiles
-    # - asdf
+    - asdf

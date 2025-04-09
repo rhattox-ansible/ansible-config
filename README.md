@@ -1,5 +1,10 @@
 # ansible-config
 
+
+```
+ansible-playbook main.yaml --ask-become-pass
+```
+
 personal configuration such as bashrc/tmux/nvim/i3/asdf/etc
 
 ```
