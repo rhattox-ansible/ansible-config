@@ -1,8 +1,3 @@
-- name: Install tmux
-  ansible.builtin.apt:
-    name:
-      - tmux
-
 - name: Ensure permissions for a directory and all subfolders/files
   ansible.builtin.file:
     path: "{{ tmux_plugins_path }}"

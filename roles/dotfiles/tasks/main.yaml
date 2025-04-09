@@ -1,8 +1,3 @@
-- name: Install stow
-  ansible.builtin.apt:
-    name:
-      - stow
-
 - name: Clone dotfiles repository with specific tag
   ansible.builtin.git:
     repo: "{{ app_repository }}"
