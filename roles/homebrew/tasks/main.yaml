@@ -31,6 +31,6 @@
   become: false
   changed_when: false
   ansible.builtin.shell: |
-    {{ app_binary }} install yq ripgrep starship
+    {{ app_binary }} install yq ripgrep starship asdf
   args:
     executable: /bin/bash
