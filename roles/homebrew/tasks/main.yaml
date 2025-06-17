@@ -34,3 +34,11 @@
     {{ app_binary }} install yq ripgrep starship asdf
   args:
     executable: /bin/bash
+
+
+- name: Add ASDF init line to .bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: '. "$(brew --prefix asdf)/libexec/asdf.sh"'
+    insertafter: EOF
+    state: present
