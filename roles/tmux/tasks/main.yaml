@@ -1,4 +1,4 @@
-- name: Ensure permissions for a directory and all subfolders/files
+- name: Ensure tmux plugins directory permissions
   ansible.builtin.file:
     path: "{{ tmux_plugins_path }}"
     owner: "{{ ansible_env.SUDO_USER }}"
@@ -6,14 +6,14 @@
     recurse: true
     mode: "0750"
 
-- name: Clone TPM repository
+- name: Clone tmux plugin manager (TPM) repository
   ansible.builtin.git:
     repo: "{{ tmux_repository }}"
     dest: "{{ tmux_plugins_path }}"
     refspec: "{{ tmux_version }}"
     force: true
 
-- name: Setup Permissions
+- name: Ensure tmux configuration directory permissions
   ansible.builtin.file:
     path: "{{ tmux_default_path }}"
     owner: "{{ ansible_env.SUDO_USER }}"
